@@ -1,19 +1,29 @@
 package com.game.model;
 
 public class Cell {
-  private State state;
+  private int positionVertical;
+  private int positionHorizontal;
   private int cellValue;
 
-  public Cell() {
-    this.state = State.EMPTY;
+  public Cell(int positionVertical, int positionHorizontal) {
+    this.positionHorizontal = positionHorizontal;
+    this.positionVertical = positionVertical;
   }
 
-  public State getState() {
-    return state;
+  public int getPositionVertical() {
+    return positionVertical;
   }
 
-  public void setState(State state) {
-    this.state = state;
+  public void setPositionVertical(int positionVertical) {
+    this.positionVertical = positionVertical;
+  }
+
+  public int getPositionHorizontal() {
+    return positionHorizontal;
+  }
+
+  public void setPositionHorizontal(int positionHorizontal) {
+    this.positionHorizontal = positionHorizontal;
   }
 
   public int getCellValue() {
@@ -22,5 +32,27 @@ public class Cell {
 
   public void setCellValue(int cellValue) {
     this.cellValue = cellValue;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Cell cell = (Cell) o;
+
+    return cellValue == cell.cellValue;
+  }
+
+  @Override
+  public int hashCode() {
+    return cellValue;
+  }
+
+  @Override
+  public String toString() {
+    return "Cell{" +
+            "cellValue=" + cellValue +
+            '}';
   }
 }
