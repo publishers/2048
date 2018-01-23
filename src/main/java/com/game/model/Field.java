@@ -1,13 +1,16 @@
 package com.game.model;
 
 public class Field {
-  private Cell[][] field;
+  private Cell[][] cells;
 
-  public Field(Cell[][] field) {
-    this.field = field;
+  public Field(Cell[][] cells) {
+    this.cells = cells;
+    if(cells.length != cells[0].length){
+      throw new IllegalStateException("Field must be NxN");
+    }
   }
 
-  public Cell[][] getField() {
-    return field;
+  public Cell[][] getCells() {
+    return cells;
   }
 }
