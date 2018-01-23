@@ -66,6 +66,19 @@ public class FieldModifierUpTest {
                     {instance(0, 2, 0), instance(0, 2, 1), instance(0, 2, 2)}
             }
     });
+
+    data.add(new Object[]{
+            new Cell[][]{
+                    {instance(0, 0, 0), instance(2, 0, 1), instance(2, 0, 2)},
+                    {instance(0, 1, 0), instance(2, 1, 1), instance(2, 1, 2)},
+                    {instance(2, 2, 0), instance(2, 2, 1), instance(0, 2, 2)}
+            },
+            new Cell[][]{
+                    {instance(2, 0, 0), instance(4, 0, 1), instance(4, 0, 2)},
+                    {instance(0, 1, 0), instance(2, 1, 1), instance(0, 1, 2)},
+                    {instance(0, 2, 0), instance(0, 2, 1), instance(0, 2, 2)}
+            }
+    });
     return data;
   }
 
@@ -79,7 +92,7 @@ public class FieldModifierUpTest {
 
   @Test
   public void testExpectedUpModifiedWhenPressButtonUp() {
-    modifier.modifiedUp();
+    modifier.actionUp();
     assertArrayEquals(expectedCellsUp, actualCellsUp);
   }
 }

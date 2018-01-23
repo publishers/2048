@@ -14,7 +14,7 @@ public class FieldModifier {
     this.field = field;
   }
 
-  public final void modifiedUp() {
+  public final void actionUp() {
     Cell[][] cells = field.getField();
 
     List<Cell> cellList = new ArrayList<>();
@@ -24,13 +24,13 @@ public class FieldModifier {
           cellList.add(cells[j][i]);
         }
       }
-      List<Cell> updatedCellList = combineTheSameUp(cellList);
+      List<Cell> updatedCellList = combineTheSame(cellList);
       updateCellsUp(cells, updatedCellList);
       cellList.clear();
     }
   }
 
-  private List<Cell> combineTheSameUp(List<Cell> cellList) {
+  private List<Cell> combineTheSame(List<Cell> cellList) {
     for (int i = 0; i < cellList.size() - 1; i++) {
       Cell cell1 = cellList.get(i);
       Cell cell2 = cellList.get(i + 1);
@@ -62,15 +62,43 @@ public class FieldModifier {
     }
   }
 
-  public final void modifiedDown() {
+  public final void actionDown() {
+    Cell[][] cells = field.getField();
+
+    List<Cell> cellList = new ArrayList<>();
+    for (int i = 0; i < cells[0].length; i++) {
+      for (int j = 0; j < cells.length; j++) {
+        if (cells[j][i].getCellValue() != 0) {
+          cellList.add(cells[j][i]);
+        }
+      }
+      List<Cell> updatedCellList = combineTheSame(cellList);
+      updateCellsDown(cells, updatedCellList);
+      cellList.clear();
+    }
+  }
+
+  private void updateCellsDown(Cell[][] cells, List<Cell> updatedCellList) {
+    if (updatedCellList.isEmpty()) {
+      return;
+    }
+    int lastVerticalPosition = updatedCellList.size();
+    int horizontalPosition = updatedCellList.get(0).getPositionHorizontal();
+    for (int i = updatedCellList.size() - 1; i >= 0 ; i--) {
+      Cell cell = updatedCellList.get(i);
+      cell.setPositionVertical(cells.length - i - 1);
+      cells[cells.length - i - 1][horizontalPosition].setCellValue(cell.getCellValue());
+    }
+    for (int i = cells.length - lastVerticalPosition - 1; i >= 0 ; i--) {
+      cells[i][horizontalPosition].setCellValue(0);
+    }
+  }
+
+  public final void actionLeft() {
     throw new UnsupportedOperationException();
   }
 
-  public final void modifiedLeft() {
-    throw new UnsupportedOperationException();
-  }
-
-  public final void modifiedRight() {
+  public final void actionRight() {
     throw new UnsupportedOperationException();
   }
 }
