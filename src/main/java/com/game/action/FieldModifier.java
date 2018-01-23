@@ -54,7 +54,6 @@ public class FieldModifier {
     int horizontalPosition = updatedCellList.get(0).getPositionHorizontal();
     for (int i = 0; i < updatedCellList.size(); i++) {
       Cell cell = updatedCellList.get(i);
-      cell.setPositionVertical(i);
       cells[i][horizontalPosition].setCellValue(cell.getCellValue());
     }
     for (int i = lastVerticalPosition; i < cells.length; i++) {
@@ -86,7 +85,6 @@ public class FieldModifier {
     int horizontalPosition = updatedCellList.get(0).getPositionHorizontal();
     for (int i = updatedCellList.size() - 1; i >= 0 ; i--) {
       Cell cell = updatedCellList.get(i);
-      cell.setPositionVertical(cells.length - i - 1);
       cells[cells.length - i - 1][horizontalPosition].setCellValue(cell.getCellValue());
     }
     for (int i = cells.length - lastVerticalPosition - 1; i >= 0 ; i--) {
@@ -118,7 +116,6 @@ public class FieldModifier {
     int verticalPosition = updatedCellList.get(0).getPositionVertical();
     for (int i = 0; i < updatedCellList.size(); i++) {
       Cell cell = updatedCellList.get(i);
-      cell.setPositionVertical(i);
       cells[verticalPosition][i].setCellValue(cell.getCellValue());
     }
     for (int i = lastHorizontalPosition; i < cells.length; i++) {
@@ -127,6 +124,33 @@ public class FieldModifier {
   }
 
   public final void actionRight() {
-    throw new UnsupportedOperationException();
+    Cell[][] cells = field.getField();
+
+    List<Cell> cellList = new ArrayList<>();
+    for (Cell[] cell : cells) {
+      for (int j = cells[0].length - 1; j >= 0; j--) {
+        if (cell[j].getCellValue() != 0) {
+          cellList.add(cell[j]);
+        }
+      }
+      List<Cell> updatedCellList = combineTheSame(cellList);
+      updateCellsRight(cells, updatedCellList);
+      cellList.clear();
+    }
+  }
+
+  private void updateCellsRight(Cell[][] cells, List<Cell> updatedCellList) {
+    if (updatedCellList.isEmpty()) {
+      return;
+    }
+    int lastHorizontalPosition = updatedCellList.size();
+    int verticalPosition = updatedCellList.get(0).getPositionVertical();
+    for (int i = 0; i < updatedCellList.size() ; i++) {
+      Cell cell = updatedCellList.get(i);
+      cells[verticalPosition][cells[0].length - i - 1].setCellValue(cell.getCellValue());
+    }
+    for (int i = cells.length - lastHorizontalPosition - 1; i >= 0 ; i--) {
+      cells[verticalPosition][i].setCellValue(0);
+    }
   }
 }
