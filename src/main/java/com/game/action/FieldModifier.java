@@ -19,9 +19,9 @@ public class FieldModifier {
 
     List<Cell> cellList = new ArrayList<>();
     for (int i = 0; i < cells[0].length; i++) {
-      for (int j = 0; j < cells.length; j++) {
-        if (cells[j][i].getCellValue() != 0) {
-          cellList.add(cells[j][i]);
+      for (Cell[] cell : cells) {
+        if (cell[i].getCellValue() != 0) {
+          cellList.add(cell[i]);
         }
       }
       List<Cell> updatedCellList = combineTheSame(cellList);
@@ -67,9 +67,9 @@ public class FieldModifier {
 
     List<Cell> cellList = new ArrayList<>();
     for (int i = 0; i < cells[0].length; i++) {
-      for (int j = 0; j < cells.length; j++) {
-        if (cells[j][i].getCellValue() != 0) {
-          cellList.add(cells[j][i]);
+      for (Cell[] cell : cells) {
+        if (cell[i].getCellValue() != 0) {
+          cellList.add(cell[i]);
         }
       }
       List<Cell> updatedCellList = combineTheSame(cellList);
@@ -95,7 +95,35 @@ public class FieldModifier {
   }
 
   public final void actionLeft() {
-    throw new UnsupportedOperationException();
+    Cell[][] cells = field.getField();
+
+    List<Cell> cellList = new ArrayList<>();
+    for (Cell[] cell : cells) {
+      for (int j = 0; j < cells[0].length; j++) {
+        if (cell[j].getCellValue() != 0) {
+          cellList.add(cell[j]);
+        }
+      }
+      List<Cell> updatedCellList = combineTheSame(cellList);
+      updateCellsLeft(cells, updatedCellList);
+      cellList.clear();
+    }
+  }
+
+  private void updateCellsLeft(Cell[][] cells, List<Cell> updatedCellList) {
+    if (updatedCellList.isEmpty()) {
+      return;
+    }
+    int lastHorizontalPosition = updatedCellList.size();
+    int verticalPosition = updatedCellList.get(0).getPositionVertical();
+    for (int i = 0; i < updatedCellList.size(); i++) {
+      Cell cell = updatedCellList.get(i);
+      cell.setPositionVertical(i);
+      cells[verticalPosition][i].setCellValue(cell.getCellValue());
+    }
+    for (int i = lastHorizontalPosition; i < cells.length; i++) {
+      cells[verticalPosition][i].setCellValue(0);
+    }
   }
 
   public final void actionRight() {
