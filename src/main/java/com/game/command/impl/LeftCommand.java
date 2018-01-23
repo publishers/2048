@@ -14,4 +14,9 @@ public class LeftCommand implements Command {
   public void execute() {
     actionField.actionLeft();
   }
+
+  @Override
+  public void undo() {
+    throw new UnsupportedOperationException();
+  }
 }

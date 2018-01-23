@@ -14,4 +14,9 @@ public class UpCommand implements Command {
   public void execute() {
     actionField.actionUp();
   }
+
+  @Override
+  public void undo() {
+    throw new UnsupportedOperationException();
+  }
 }

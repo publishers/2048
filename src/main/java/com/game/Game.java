@@ -11,8 +11,13 @@ import com.game.command.impl.UpCommand;
 import com.game.model.Cell;
 import com.game.model.Field;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Game {
@@ -68,12 +73,18 @@ public class Game {
     print.execute();
     System.out.println("~~~~~~~~~~~~~~~~~");
     String action;
+    Queue<Command> executedCommands = new PriorityQueue<>();
     do {
       action = scanner.nextLine();
-      Command command = actions.get(action);
-      if (command != null) {
-        command.execute();
-        addValueToRandomCell.execute();
+      if(action.equals("undo")) {
+        executedCommands.poll().undo();
+      }else {
+        Command command = actions.get(action);
+        if (command != null) {
+          command.execute();
+          executedCommands.add(command);
+          addValueToRandomCell.execute();
+        }
       }
       print.execute();
       System.out.println("~~~~~~~~~~~~~~~~~");

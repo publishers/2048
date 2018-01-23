@@ -14,4 +14,9 @@ public class AddCommand implements Command {
   public void execute() {
     actionField.addValueToRandomCell();
   }
+
+  @Override
+  public void undo() {
+    throw new UnsupportedOperationException();
+  }
 }

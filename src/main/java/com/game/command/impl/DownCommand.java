@@ -14,4 +14,9 @@ public class DownCommand implements Command {
   public void execute() {
     actionField.actionDown();
   }
+
+  @Override
+  public void undo() {
+    throw new UnsupportedOperationException();
+  }
 }

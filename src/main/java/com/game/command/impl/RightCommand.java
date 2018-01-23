@@ -14,4 +14,9 @@ public class RightCommand implements Command {
   public void execute() {
     actionField.actionRight();
   }
+
+  @Override
+  public void undo() {
+    throw new UnsupportedOperationException();
+  }
 }

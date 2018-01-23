@@ -14,4 +14,9 @@ public class PrintCommand implements Command {
   public void execute() {
     actionField.print();
   }
+
+  @Override
+  public void undo() {
+    throw new UnsupportedOperationException();
+  }
 }
