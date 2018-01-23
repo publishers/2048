@@ -52,7 +52,9 @@ public class Cell {
   @Override
   public String toString() {
     return "Cell{" +
-            "cellValue=" + cellValue +
+            "positionVertical=" + positionVertical +
+            ", positionHorizontal=" + positionHorizontal +
+            ", cellValue=" + cellValue +
             '}';
   }
 }

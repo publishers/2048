@@ -60,4 +60,25 @@ public class ActionField {
                               cells[verticalPosition][cells[0].length - cellPosition - 1].setCellValue(cellValue));
             });
   }
+
+  public final void addValueToRandomCell() {
+    Cell[][] cells = field.getCells();
+    Cell cell = findEmptyCell(cells);
+    cell.setCellValue(2);
+  }
+
+  private static Cell findEmptyCell(Cell[][] cells) {
+    int fieldSize = cells.length;
+    Cell cell;
+    do {
+      int vertical = (int) (Math.random() * fieldSize);
+      int horizontal = (int) (Math.random() * fieldSize);
+      cell = cells[vertical][horizontal];
+    } while (cell.getCellValue() != 0);
+    return cell;
+  }
+
+  public final void print(){
+    System.out.println(field.toString());
+  }
 }
