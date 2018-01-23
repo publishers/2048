@@ -78,7 +78,7 @@ public class ActionField {
     return cell;
   }
 
-  public final void print(){
+  public final void print() {
     System.out.println(field.toString());
   }
 }

@@ -36,7 +36,7 @@ public final class CellAction {
         }
       }
       List<Cell> updatedCellList = combineCells(cellList);
-      if(!updatedCellList.isEmpty()) {
+      if (!updatedCellList.isEmpty()) {
         updateField.updateCells(cells, updatedCellList);
       }
       cellList.clear();
