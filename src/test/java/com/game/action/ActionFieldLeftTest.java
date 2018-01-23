@@ -79,6 +79,19 @@ public class ActionFieldLeftTest {
                     {instance(4, 2, 0), instance(0, 2, 1), instance(0, 2, 2)}
             }
     });
+
+    data.add(new Object[]{
+            new Cell[][]{
+                    {instance(0, 0, 0), instance(0, 0, 1), instance(0, 0, 2)},
+                    {instance(0, 1, 0), instance(2, 1, 1), instance(0, 1, 2)},
+                    {instance(0, 2, 0), instance(0, 2, 1), instance(0, 2, 2)}
+            },
+            new Cell[][]{
+                    {instance(0, 0, 0), instance(0, 0, 1), instance(0, 0, 2)},
+                    {instance(2, 1, 0), instance(0, 1, 1), instance(0, 1, 2)},
+                    {instance(0, 2, 0), instance(0, 2, 1), instance(0, 2, 2)}
+            }
+    });
     return data;
   }
 
