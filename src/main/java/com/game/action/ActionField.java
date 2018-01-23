@@ -5,12 +5,13 @@ import com.game.model.Field;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class FieldModifier {
+import static com.game.utils.CellList.combineClients;
+
+public class ActionField {
   private Field field;
 
-  public FieldModifier(Field field) {
+  public ActionField(Field field) {
     this.field = field;
   }
 
@@ -24,26 +25,10 @@ public class FieldModifier {
           cellList.add(cell[i]);
         }
       }
-      List<Cell> updatedCellList = combineTheSame(cellList);
+      List<Cell> updatedCellList = combineClients(cellList);
       updateCellsUp(cells, updatedCellList);
       cellList.clear();
     }
-  }
-
-  private List<Cell> combineTheSame(List<Cell> cellList) {
-    for (int i = 0; i < cellList.size() - 1; i++) {
-      Cell cell1 = cellList.get(i);
-      Cell cell2 = cellList.get(i + 1);
-      if (cell1.equals(cell2)) {
-        int sum = cell1.getCellValue() + cell2.getCellValue();
-        cell1.setCellValue(sum);
-        cell2.setCellValue(0);
-      }
-    }
-    return cellList
-            .stream()
-            .filter(cell -> cell.getCellValue() != 0)
-            .collect(Collectors.toList());
   }
 
   private void updateCellsUp(Cell[][] cells, List<Cell> updatedCellList) {
@@ -66,12 +51,12 @@ public class FieldModifier {
 
     List<Cell> cellList = new ArrayList<>();
     for (int i = 0; i < cells[0].length; i++) {
-      for (Cell[] cell : cells) {
-        if (cell[i].getCellValue() != 0) {
-          cellList.add(cell[i]);
+      for (int j = cells.length - 1; j >= 0; j--) {
+        if (cells[j][i].getCellValue() != 0) {
+          cellList.add(cells[j][i]);
         }
       }
-      List<Cell> updatedCellList = combineTheSame(cellList);
+      List<Cell> updatedCellList = combineClients(cellList);
       updateCellsDown(cells, updatedCellList);
       cellList.clear();
     }
@@ -102,7 +87,7 @@ public class FieldModifier {
           cellList.add(cell[j]);
         }
       }
-      List<Cell> updatedCellList = combineTheSame(cellList);
+      List<Cell> updatedCellList = combineClients(cellList);
       updateCellsLeft(cells, updatedCellList);
       cellList.clear();
     }
@@ -133,7 +118,7 @@ public class FieldModifier {
           cellList.add(cell[j]);
         }
       }
-      List<Cell> updatedCellList = combineTheSame(cellList);
+      List<Cell> updatedCellList = combineClients(cellList);
       updateCellsRight(cells, updatedCellList);
       cellList.clear();
     }

@@ -12,17 +12,17 @@ import java.util.List;
 import static org.junit.Assert.assertArrayEquals;
 
 @RunWith(Parameterized.class)
-public class FieldModifierDownTest {
+public class ActionFieldDownTest {
 
   private Cell[][] actualCellsUp;
   private Cell[][] expectedCellsUp;
 
-  private FieldModifier modifier;
+  private ActionField modifier;
 
-  public FieldModifierDownTest(Cell[][] actualCellsUp, Cell[][] expectedCellsUp) {
+  public ActionFieldDownTest(Cell[][] actualCellsUp, Cell[][] expectedCellsUp) {
     this.actualCellsUp = actualCellsUp;
     this.expectedCellsUp = expectedCellsUp;
-    modifier = new FieldModifier(new Field(this.actualCellsUp));
+    modifier = new ActionField(new Field(this.actualCellsUp));
   }
 
   @Parameterized.Parameters

@@ -12,17 +12,17 @@ import java.util.List;
 import static org.junit.Assert.assertArrayEquals;
 
 @RunWith(Parameterized.class)
-public class FieldModifierLeftTest {
+public class ActionFieldRightTest {
 
   private Cell[][] actualCellsUp;
   private Cell[][] expectedCellsUp;
 
-  private FieldModifier modifier;
+  private ActionField modifier;
 
-  public FieldModifierLeftTest(Cell[][] actualCellsUp, Cell[][] expectedCellsUp) {
+  public ActionFieldRightTest(Cell[][] actualCellsUp, Cell[][] expectedCellsUp) {
     this.actualCellsUp = actualCellsUp;
     this.expectedCellsUp = expectedCellsUp;
-    modifier = new FieldModifier(new Field(this.actualCellsUp));
+    modifier = new ActionField(new Field(this.actualCellsUp));
   }
 
   @Parameterized.Parameters
@@ -35,9 +35,9 @@ public class FieldModifierLeftTest {
                     {instance(4, 2, 0), instance(5, 2, 1), instance(0, 2, 2)}
             },
             new Cell[][]{
-                    {instance(4, 0, 0), instance(2, 0, 1), instance(0, 0, 2)},
-                    {instance(5, 1, 0), instance(2, 1, 1), instance(0, 1, 2)},
-                    {instance(4, 2, 0), instance(5, 2, 1), instance(0, 2, 2)}
+                    {instance(0, 0, 0), instance(4, 0, 1), instance(2, 0, 2)},
+                    {instance(0, 1, 0), instance(5, 1, 1), instance(2, 1, 2)},
+                    {instance(0, 2, 0), instance(4, 2, 1), instance(5, 2, 2)}
             }
     });
 
@@ -49,8 +49,8 @@ public class FieldModifierLeftTest {
             },
             new Cell[][]{
                     {instance(2, 0, 0), instance(4, 0, 1), instance(2, 0, 2)},
-                    {instance(4, 1, 0), instance(0, 1, 1), instance(0, 1, 2)},
-                    {instance(4, 2, 0), instance(0, 2, 1), instance(0, 2, 2)}
+                    {instance(0, 1, 0), instance(0, 1, 1), instance(4, 1, 2)},
+                    {instance(0, 2, 0), instance(0, 2, 1), instance(4, 2, 2)}
             }
     });
 
@@ -61,9 +61,9 @@ public class FieldModifierLeftTest {
                     {instance(2, 2, 0), instance(2, 2, 1), instance(0, 2, 2)}
             },
             new Cell[][]{
-                    {instance(4, 0, 0), instance(2, 0, 1), instance(0, 0, 2)},
-                    {instance(4, 1, 0), instance(0, 1, 1), instance(0, 1, 2)},
-                    {instance(4, 2, 0), instance(0, 2, 1), instance(0, 2, 2)}
+                    {instance(0, 0, 0), instance(2, 0, 1), instance(4, 0, 2)},
+                    {instance(0, 1, 0), instance(0, 1, 1), instance(4, 1, 2)},
+                    {instance(0, 2, 0), instance(0, 2, 1), instance(4, 2, 2)}
             }
     });
 
@@ -74,9 +74,9 @@ public class FieldModifierLeftTest {
                     {instance(2, 2, 0), instance(2, 2, 1), instance(0, 2, 2)}
             },
             new Cell[][]{
-                    {instance(4, 0, 0), instance(0, 0, 1), instance(0, 0, 2)},
-                    {instance(4, 1, 0), instance(0, 1, 1), instance(0, 1, 2)},
-                    {instance(4, 2, 0), instance(0, 2, 1), instance(0, 2, 2)}
+                    {instance(0, 0, 0), instance(0, 0, 1), instance(4, 0, 2)},
+                    {instance(0, 1, 0), instance(0, 1, 1), instance(4, 1, 2)},
+                    {instance(0, 2, 0), instance(0, 2, 1), instance(4, 2, 2)}
             }
     });
     return data;
@@ -92,7 +92,7 @@ public class FieldModifierLeftTest {
 
   @Test
   public void testExpectedUpModifiedWhenPressButtonUp() {
-    modifier.actionLeft();
+    modifier.actionRight();
     assertArrayEquals(expectedCellsUp, actualCellsUp);
   }
 }
