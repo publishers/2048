@@ -1,7 +1,9 @@
 package com.game.model;
 
 public class EmptyCell extends Cell {
-  public EmptyCell(int positionVertical, int positionHorizontal) {
-    super(positionVertical, positionHorizontal);
+  private static final int UNUSED_POSITION = -1;
+
+  public EmptyCell() {
+    super(UNUSED_POSITION, UNUSED_POSITION);
   }
 }

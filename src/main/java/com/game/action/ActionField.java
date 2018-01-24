@@ -101,7 +101,7 @@ public class ActionField {
       }
     }
     if (!isFindEmptyCell) {
-      return new EmptyCell(-1, -1);
+      return new EmptyCell();
     }
     return cell;
   }
