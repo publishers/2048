@@ -27,9 +27,9 @@ public final class CellAction {
 
   public static void process(Cell[][] cells, ExtractCell extractCell, UpdateField updateField) {
     List<Cell> cellList = new ArrayList<>();
-    int cellSize = cells.length;
-    for (int i = 0; i < cellSize; i++) {
-      for (int j = 0; j < cellSize; j++) {
+    int fieldSize = cells.length;
+    for (int i = 0; i < fieldSize; i++) {
+      for (int j = 0; j < fieldSize; j++) {
         Cell cell = extractCell.extract(i, j);
         if (cell.getCellValue() != 0) {
           cellList.add(cell);
@@ -45,12 +45,12 @@ public final class CellAction {
 
   private static List<Cell> combineCells(List<Cell> cellList) {
     for (int i = 0; i < cellList.size() - 1; i++) {
-      Cell cell1 = cellList.get(i);
-      Cell cell2 = cellList.get(i + 1);
-      if (cell1.equals(cell2)) {
-        int sum = cell1.getCellValue() + cell2.getCellValue();
-        cell1.setCellValue(sum);
-        cell2.setCellValue(0);
+      Cell currentCell = cellList.get(i);
+      Cell nextCell = cellList.get(i + 1);
+      if (currentCell.equals(nextCell)) {
+        int cellSum = currentCell.getCellValue() + nextCell.getCellValue();
+        currentCell.setCellValue(cellSum);
+        nextCell.setCellValue(0);
       }
     }
     return cellList

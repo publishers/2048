@@ -2,27 +2,31 @@ package com.game;
 
 import com.game.action.ActionField;
 import com.game.command.Command;
-import com.game.command.impl.AddCommand;
+import com.game.command.impl.AddCells;
 import com.game.command.impl.DownCommand;
 import com.game.command.impl.LeftCommand;
-import com.game.command.impl.PrintCommand;
+import com.game.command.impl.PrintField;
 import com.game.command.impl.RightCommand;
 import com.game.command.impl.UpCommand;
 import com.game.model.Cell;
 import com.game.model.Field;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 
 public class Game {
   private Map<String, Command> actions;
+  private AddCells addCells;
+  private PrintField printField;
 
   public Game(int fieldSize) {
     Field field = initField(fieldSize);
     ActionField actionField = new ActionField(field);
+    printField = new PrintField(actionField);
+    addCells = new AddCells(actionField);
     actions = initActions(actionField);
   }
 
@@ -42,16 +46,12 @@ public class Game {
     Command downCommand = new DownCommand(actionField);
     Command leftCommand = new LeftCommand(actionField);
     Command rightCommand = new RightCommand(actionField);
-    Command print = new PrintCommand(actionField);
-    Command addCommand = new AddCommand(actionField);
 
     Map<String, Command> actions = new HashMap<>();
     actions.put("up", upCommand);
     actions.put("down", downCommand);
     actions.put("left", leftCommand);
     actions.put("right", rightCommand);
-    actions.put("print", print);
-    actions.put("add", addCommand);
 
     return actions;
   }
@@ -64,13 +64,11 @@ public class Game {
 
   public void start() {
     Scanner scanner = new Scanner(System.in);
-    Command print = actions.get("print");
-    Command addValueToRandomCell = actions.get("add");
-    addValueToRandomCell.execute();
-    print.execute();
+    addCells.execute();
+    printField.execute();
     System.out.println("~~~~~~~~~~~~~~~~~");
     String action;
-    Queue<Command> executedCommands = new PriorityQueue<>();
+    Queue<Command> executedCommands = new ArrayDeque<>();
     do {
       action = scanner.nextLine();
       if (action.equals("undo")) {
@@ -80,11 +78,14 @@ public class Game {
         if (command != null) {
           command.execute();
           executedCommands.add(command);
-          addValueToRandomCell.execute();
+          if(!addCells.execute()){
+            break;
+          }
         }
       }
-      print.execute();
+      printField.execute();
       System.out.println("~~~~~~~~~~~~~~~~~");
     } while (!action.equals("exit"));
+    System.out.println("Game is finished");
   }
 }

@@ -1,6 +1,7 @@
 package com.game.action;
 
 import com.game.model.Cell;
+import com.game.model.EmptyCell;
 import com.game.model.Field;
 
 import static com.game.utils.CellAction.process;
@@ -61,20 +62,47 @@ public class ActionField {
             });
   }
 
-  public final void addValueToRandomCell() {
+  public final boolean addValueToRandomCell() {
     Cell[][] cells = field.getCells();
     Cell cell = findEmptyCell(cells);
-    cell.setCellValue(2);
+    boolean result = true;
+    if (cell.getPositionHorizontal() == -1) {
+      result = false;
+    } else {
+      cell.setCellValue(2);
+    }
+    return result;
   }
 
   private static Cell findEmptyCell(Cell[][] cells) {
     int fieldSize = cells.length;
     Cell cell;
+    int numberLoopAction = 0;
     do {
       int vertical = (int) (Math.random() * fieldSize);
       int horizontal = (int) (Math.random() * fieldSize);
       cell = cells[vertical][horizontal];
-    } while (cell.getCellValue() != 0);
+      numberLoopAction++;
+    } while (cell.getCellValue() != 0 && numberLoopAction < 10 * fieldSize);
+
+    boolean isFindEmptyCell = true;
+
+    if(numberLoopAction == 10 * fieldSize) {
+      isFindEmptyCell = false;
+      for (int i = 0; i < fieldSize; i++) {
+        for (int j = 0; j < fieldSize; j++) {
+          if (cells[i][j].getCellValue() == 0) {
+            cell = cells[i][j];
+            isFindEmptyCell = true;
+            break;
+          }
+        }
+        if (isFindEmptyCell) break;
+      }
+    }
+    if (!isFindEmptyCell) {
+      return new EmptyCell(-1, -1);
+    }
     return cell;
   }
 
