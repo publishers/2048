@@ -4,19 +4,19 @@ import com.game.action.ActionField;
 import com.game.command.Command;
 
 public class DownCommand implements Command {
-  private ActionField actionField;
+    private ActionField actionField;
 
-  public DownCommand(ActionField actionField) {
-    this.actionField = actionField;
-  }
+    public DownCommand(ActionField actionField) {
+        this.actionField = actionField;
+    }
 
-  @Override
-  public void execute() {
-    actionField.actionDown();
-  }
+    @Override
+    public void execute() {
+        actionField.actionDown();
+    }
 
-  @Override
-  public void undo() {
-    throw new UnsupportedOperationException();
-  }
+    @Override
+    public void undo() {
+        throw new UnsupportedOperationException();
+    }
 }
