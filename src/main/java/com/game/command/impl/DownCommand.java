@@ -1,13 +1,11 @@
 package com.game.command.impl;
 
 import com.game.action.ActionField;
-import com.game.command.Command;
 
-public class DownCommand implements Command {
-    private ActionField actionField;
+public class DownCommand extends CommonCommand {
 
     public DownCommand(ActionField actionField) {
-        this.actionField = actionField;
+        super(actionField);
     }
 
     @Override
@@ -15,8 +13,4 @@ public class DownCommand implements Command {
         actionField.actionDown();
     }
 
-    @Override
-    public void undo() {
-        throw new UnsupportedOperationException();
-    }
 }

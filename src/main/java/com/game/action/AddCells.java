@@ -7,8 +7,9 @@ public class AddCells {
         this.actionField = actionField;
     }
 
-    public boolean execute() {
-        return actionField.addValueToRandomCell();
+    public void execute() {
+        actionField.addValueToRandomCell();
+        actionField.saveNewState();
     }
 
 }

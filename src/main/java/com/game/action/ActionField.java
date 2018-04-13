@@ -62,19 +62,13 @@ public class ActionField {
                 });
     }
 
-    public final boolean addValueToRandomCell() {
+    public final void addValueToRandomCell() {
         Cell[][] cells = field.getCells();
         Cell cell = findEmptyCell(cells);
-        boolean result = true;
-        if (cell.getPositionHorizontal() == -1) {
-            result = false;
-        } else {
-            cell.setCellValue(2);
-        }
-        return result;
+        cell.setCellValue(2);
     }
 
-    private static Cell findEmptyCell(Cell[][] cells) {
+    private Cell findEmptyCell(Cell[][] cells) {
         int fieldSize = cells.length;
         Cell cell;
         int numberLoopAction = 0;
@@ -108,5 +102,13 @@ public class ActionField {
 
     public final void print() {
         System.out.println(field.toString());
+    }
+
+    public void undo() {
+        field.undo();
+    }
+
+    public void saveNewState(){
+        field.saveState();
     }
 }

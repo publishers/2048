@@ -12,9 +12,9 @@ import com.game.model.Cell;
 import com.game.model.Field;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class Game {
@@ -68,19 +68,19 @@ public class Game {
         printField.execute();
         System.out.println("~~~~~~~~~~~~~~~~~");
         String action;
-        Queue<Command> executedCommands = new ArrayDeque<>();
+        Deque<Command> executedCommands = new ArrayDeque<>();
         do {
             action = scanner.nextLine();
             if (action.equals("undo")) {
-                executedCommands.poll().undo();
+                if (executedCommands.size() > 0) {
+                    executedCommands.removeLast().undo();
+                }
             } else {
                 Command command = actions.get(action);
                 if (command != null) {
                     command.execute();
                     executedCommands.add(command);
-                    if (!addCells.execute()) {
-                        break;
-                    }
+                    addCells.execute();
                 }
             }
             printField.execute();

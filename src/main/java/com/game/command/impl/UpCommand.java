@@ -1,22 +1,15 @@
 package com.game.command.impl;
 
 import com.game.action.ActionField;
-import com.game.command.Command;
 
-public class UpCommand implements Command {
-    private ActionField actionField;
+public class UpCommand extends CommonCommand {
 
     public UpCommand(ActionField actionField) {
-        this.actionField = actionField;
+        super(actionField);
     }
 
     @Override
     public void execute() {
         actionField.actionUp();
-    }
-
-    @Override
-    public void undo() {
-        throw new UnsupportedOperationException();
     }
 }
