@@ -11,7 +11,11 @@ import javafx.scene.text.Font;
  * @author Serhii Malykhin
  */
 public class FieldDraw {
-    private final int MAX_FIELD_SIZE = 500;
+    private static final int MAX_FIELD_SIZE = 500;
+    private static final int RED = 50;
+    private static final int GREEN = 250;
+    private static final int BLUE = 111;
+    private static final int MAX_COLOR = 255;
     private int numberCells;
     private Field field;
     private int radius;
@@ -46,13 +50,15 @@ public class FieldDraw {
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells.length; j++) {
                 Cell cell = cells[i][j];
-                if(cell.getCellValue() != 0) {
+                if (cell.getCellValue() != 0) {
                     double x = convertCoordinate(j);
                     double y = convertCoordinate(i);
-                    gc.setFill(Color.rgb(50, (229 * cell.getCellValue())%255, (111 * cell.getCellValue())%255));
+                    gc.setFill(Color.rgb(RED,
+                            (GREEN * cell.getCellValue()) % MAX_COLOR,
+                            (BLUE * cell.getCellValue()) % MAX_COLOR));
                     gc.fillRect(x, y, radius, radius);
-                    gc.setFont(Font.font(50 - (cell.getCellValue())%25));
-                    gc.strokeText(cell.getCellValue() + "", x+50, y + 80 );
+                    gc.setFont(Font.font(50 - (cell.getCellValue()) % 25));
+                    gc.strokeText(cell.getCellValue() + "", x + 50, y + 80);
                 }
             }
         }
