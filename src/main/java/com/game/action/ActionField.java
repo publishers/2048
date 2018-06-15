@@ -58,14 +58,14 @@ public class ActionField {
                     int verticalPosition = updatedCellList.get(0).getPositionVertical();
                     updateCells(cells, updatedCellList,
                             (cellPosition, cellValue) ->
-                                    cells[verticalPosition][cells[0].length - cellPosition - 1].setCellValue(cellValue));
+                                    cells[verticalPosition][cells.length - 1 - cellPosition ].setCellValue(cellValue));
                 });
     }
 
     public final void addValueToRandomCell() {
         Cell[][] cells = field.getCells();
         Cell cell = findEmptyCell(cells);
-        cell.setCellValue(2);
+        cell.setCellValue(Math.random() > 0.28 ? 2 : 4);
     }
 
     private Cell findEmptyCell(Cell[][] cells) {
@@ -83,10 +83,10 @@ public class ActionField {
 
         if (numberLoopAction == 10 * fieldSize) {
             isFindEmptyCell = false;
-            for (int i = 0; i < fieldSize; i++) {
+            for (Cell[] row : cells) {
                 for (int j = 0; j < fieldSize; j++) {
-                    if (cells[i][j].getCellValue() == 0) {
-                        cell = cells[i][j];
+                    if (row[j].getCellValue() == 0) {
+                        cell = row[j];
                         isFindEmptyCell = true;
                         break;
                     }
