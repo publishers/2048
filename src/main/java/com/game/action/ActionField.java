@@ -100,10 +100,6 @@ public class ActionField {
         return cell;
     }
 
-    public final void print() {
-        System.out.println(field.toString());
-    }
-
     public void undo() {
         field.undo();
     }

@@ -2,7 +2,6 @@ package com.game;
 
 import com.game.action.ActionField;
 import com.game.action.AddCells;
-import com.game.action.PrintField;
 import com.game.command.Command;
 import com.game.command.impl.DownCommand;
 import com.game.command.impl.LeftCommand;
@@ -11,10 +10,11 @@ import com.game.command.impl.UpCommand;
 import com.game.model.Cell;
 import com.game.model.Field;
 import com.ui.FieldDraw;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -22,16 +22,12 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Game implements Initializable {
-
     @FXML
     private Canvas canvasField;
 
     private FieldDraw fieldDraw;
-
-    private static final int DEFAULT_FIELD_SIZE = 3;
-    private Map<String, Command> actions;
+    private Map<KeyCode, Command> actions;
     private AddCells addCells;
-    private PrintField printField;
 
     private Field initField(int fieldSize) {
         checkFieldSize(fieldSize);
@@ -44,17 +40,17 @@ public class Game implements Initializable {
         return new Field(cells);
     }
 
-    private Map<String, Command> initActions(ActionField actionField) {
+    private Map<KeyCode, Command> initActions(ActionField actionField) {
         Command upCommand = new UpCommand(actionField);
         Command downCommand = new DownCommand(actionField);
         Command leftCommand = new LeftCommand(actionField);
         Command rightCommand = new RightCommand(actionField);
 
-        Map<String, Command> actions = new HashMap<>();
-        actions.put("up", upCommand);
-        actions.put("down", downCommand);
-        actions.put("left", leftCommand);
-        actions.put("right", rightCommand);
+        Map<KeyCode, Command> actions = new HashMap<>();
+        actions.put(KeyCode.UP, upCommand);
+        actions.put(KeyCode.DOWN, downCommand);
+        actions.put(KeyCode.LEFT, leftCommand);
+        actions.put(KeyCode.RIGHT, rightCommand);
 
         return actions;
     }
@@ -65,68 +61,24 @@ public class Game implements Initializable {
         }
     }
 
-//    private void start() {
-//        Scanner scanner = new Scanner(System.in);
-//        addCells.execute();
-//        printField.execute();
-//        System.out.println("~~~~~~~~~~~~~~~~~");
-//        String action;
-//        Deque<Command> executedCommands = new ArrayDeque<>();
-//        do {
-//            action = scanner.nextLine();
-//            if (action.equals("undo")) {
-//                if (executedCommands.size() > 0) {
-//                    executedCommands.removeLast().undo();
-//                }
-//            } else {
-//                Command command = actions.get(action);
-//                if (command != null) {
-//                    command.execute();
-//                    executedCommands.add(command);
-//                    addCells.execute();
-//                }
-//            }
-//            printField.execute();
-//            System.out.println("~~~~~~~~~~~~~~~~~");
-//        } while (!action.equals("exit"));
-//        System.out.println("Game is finished");
-//    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Field field = initField(4);
         ActionField actionField = new ActionField(field);
         fieldDraw = new FieldDraw(4, field);
-        printField = new PrintField(actionField);
         addCells = new AddCells(actionField);
         actions = initActions(actionField);
         fieldDraw.drawField(canvasField);
+        canvasField.setFocusTraversable(true);
     }
 
-    @FXML
-    public void right(ActionEvent actionEvent) {
-        doAction("right");
-    }
-
-    @FXML
-    public void left(ActionEvent actionEvent) {
-        doAction("left");
-    }
-
-    @FXML
-    public void up(ActionEvent actionEvent) {
-        doAction("up");
-    }
-
-    @FXML
-    public void down(ActionEvent actionEvent) {
-        doAction("down");
-    }
-
-    private void doAction(String action){
-        actions.get(action).execute();
-        addCells.execute();
-        fieldDraw.drawField(canvasField);
-        printField.execute();
+    public void keyHandler(KeyEvent event) {
+        Command command = actions.get(event.getCode());
+        if(command != null) {
+            System.out.println(event.getCode());
+            command.execute();
+            addCells.execute();
+            fieldDraw.drawField(canvasField);
+        }
     }
 }

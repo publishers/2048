@@ -7,8 +7,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-import java.util.List;
-
 /**
  * @author Serhii Malykhin
  */
@@ -16,10 +14,12 @@ public class FieldDraw {
     private final int MAX_FIELD_SIZE = 500;
     private int numberCells;
     private Field field;
+    private int radius;
 
     public FieldDraw(int numberCells, Field field) {
         this.numberCells = numberCells;
         this.field = field;
+        radius = MAX_FIELD_SIZE / numberCells;
     }
 
     public void drawField(Canvas canvas) {
@@ -28,7 +28,7 @@ public class FieldDraw {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, MAX_FIELD_SIZE, MAX_FIELD_SIZE);
         gc.setLineWidth(1);
-        int radius = MAX_FIELD_SIZE / numberCells;
+
         for (int i = 0; i < MAX_FIELD_SIZE; i += radius) {
             gc.moveTo(i, 0);
             gc.lineTo(i, MAX_FIELD_SIZE);
@@ -43,20 +43,24 @@ public class FieldDraw {
     private void printField(Field field, Canvas canvas) {
         Cell[][] cells = field.getCells();
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFont(Font.font(20));
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells.length; j++) {
                 Cell cell = cells[i][j];
                 if(cell.getCellValue() != 0) {
-                    gc.strokeText(cell.getCellValue() + "", convertCoordinate(j), convertCoordinate(i) );
+                    double x = convertCoordinate(j);
+                    double y = convertCoordinate(i);
+                    gc.setFill(Color.rgb(50, (229 * cell.getCellValue())%255, (111 * cell.getCellValue())%255));
+                    gc.fillRect(x, y, radius, radius);
+                    gc.setFont(Font.font(50 - (cell.getCellValue())%25));
+                    gc.strokeText(cell.getCellValue() + "", x+50, y + 80 );
                 }
             }
         }
         gc.stroke();
     }
 
-    private int convertCoordinate(int digit) {
-        return (MAX_FIELD_SIZE / numberCells * digit) + 50;
+    private double convertCoordinate(int digit) {
+        return (MAX_FIELD_SIZE / numberCells * digit);
     }
 
 

@@ -10,7 +10,7 @@ public class RunGame extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent parent = FXMLLoader.load(getClass().getResource("/fromFXML/Form.fxml"));
-        stage.setScene(new Scene(parent,500,500));
+        stage.setScene(new Scene(parent,800,600));
         stage.setTitle("2048");
         stage.getScene().getStylesheets().add("css/css.css");
         stage.show();
