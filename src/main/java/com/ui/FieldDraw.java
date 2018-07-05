@@ -7,18 +7,19 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-/**
- * @author Serhii Malykhin
- */
 public class FieldDraw {
     private static final int MAX_FIELD_SIZE = 500;
     private static final int RED = 50;
     private static final int GREEN = 250;
     private static final int BLUE = 111;
     private static final int MAX_COLOR = 255;
-    private int numberCells;
-    private Field field;
-    private int radius;
+    private static final int OFFSET_X = 50;
+    private static final int OFFSET_Y = 80;
+    private static final int MAX_FONT_SIZE = 50;
+
+    private final int numberCells;
+    private final Field field;
+    private final int radius;
 
     public FieldDraw(int numberCells, Field field) {
         this.numberCells = numberCells;
@@ -57,8 +58,9 @@ public class FieldDraw {
                             (GREEN * cell.getCellValue()) % MAX_COLOR,
                             (BLUE * cell.getCellValue()) % MAX_COLOR));
                     gc.fillRect(x, y, radius, radius);
-                    gc.setFont(Font.font(50 - (cell.getCellValue()) % 25));
-                    gc.strokeText(cell.getCellValue() + "", x + 50, y + 80);
+                    int fontSizeCalculation = MAX_FONT_SIZE - (cell.getCellValue()) % 25;
+                    gc.setFont(Font.font(fontSizeCalculation));
+                    gc.strokeText(cell.getCellValue() + "", x + OFFSET_X, y + OFFSET_Y);
                 }
             }
         }

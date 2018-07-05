@@ -75,7 +75,6 @@ public class Game implements Initializable {
     public void keyHandler(KeyEvent event) {
         Command command = actions.get(event.getCode());
         if(command != null) {
-            System.out.println(event.getCode());
             command.execute();
             addCells.execute();
             fieldDraw.drawField(canvasField);
