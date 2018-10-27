@@ -6,7 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class RunGame extends Application {
+public class Game2048 extends Application {
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent parent = FXMLLoader.load(getClass().getResource("/fromFXML/Form.fxml"));
@@ -17,6 +18,6 @@ public class RunGame extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(Game2048.class, args);
     }
 }

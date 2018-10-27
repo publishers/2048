@@ -9,7 +9,7 @@ import com.game.command.impl.RightCommand;
 import com.game.command.impl.UpCommand;
 import com.game.model.Cell;
 import com.game.model.Field;
-import com.ui.FieldDraw;
+import com.ui.FieldDrawer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -22,18 +22,20 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Game implements Initializable {
+    private static final int NUMBER_CELLS_IN_LINE = 4;
+
     @FXML
     private Canvas canvasField;
 
-    private FieldDraw fieldDraw;
+    private FieldDrawer fieldDrawer;
     private Map<KeyCode, Command> actions;
     private AddCells addCells;
 
-    private Field initField(int fieldSize) {
-        checkFieldSize(fieldSize);
-        Cell[][] cells = new Cell[fieldSize][fieldSize];
-        for (int i = 0; i < fieldSize; i++) {
-            for (int j = 0; j < fieldSize; j++) {
+    private Field initField(int numberCells) {
+        checkFieldSize(numberCells);
+        Cell[][] cells = new Cell[numberCells][numberCells];
+        for (int i = 0; i < numberCells; i++) {
+            for (int j = 0; j < numberCells; j++) {
                 cells[i][j] = new Cell(i, j);
             }
         }
@@ -63,12 +65,12 @@ public class Game implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Field field = initField(4);
+        Field field = initField(NUMBER_CELLS_IN_LINE);
         ActionField actionField = new ActionField(field);
-        fieldDraw = new FieldDraw(4, field);
+        fieldDrawer = new FieldDrawer(NUMBER_CELLS_IN_LINE, field);
         addCells = new AddCells(actionField);
         actions = initActions(actionField);
-        fieldDraw.drawField(canvasField);
+        fieldDrawer.drawField(canvasField);
         canvasField.setFocusTraversable(true);
     }
 
@@ -77,7 +79,7 @@ public class Game implements Initializable {
         if(command != null) {
             command.execute();
             addCells.execute();
-            fieldDraw.drawField(canvasField);
+            fieldDrawer.drawField(canvasField);
         }
     }
 }

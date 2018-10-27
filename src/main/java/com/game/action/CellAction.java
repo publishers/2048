@@ -13,7 +13,7 @@ public final class CellAction {
             return;
         }
         int countModifiedCells = updatedCellList.size();
-        for (int i = 0; i < updatedCellList.size(); i++) {
+        for (int i = 0; i < countModifiedCells; i++) {
             Cell cell = updatedCellList.get(i);
             updateCell.updateCell(i, cell.getCellValue());
         }
@@ -22,21 +22,21 @@ public final class CellAction {
         }
     }
 
-    public static void process(Cell[][] cells, ExtractCell extractCell, UpdateField updateField) {
-        List<Cell> cellList = new ArrayList<>();
+    public static void process(Cell[][] cells, CellExtractor cellExtractor, UpdateField updateField) {
+        List<Cell> notEmptyCellList = new ArrayList<>();
         int fieldSize = cells.length;
         for (int i = 0; i < fieldSize; i++) {
             for (int j = 0; j < fieldSize; j++) {
-                Cell cell = extractCell.extract(i, j);
+                Cell cell = cellExtractor.extract(i, j);
                 if (cell.getCellValue() != 0) {
-                    cellList.add(cell);
+                    notEmptyCellList.add(cell);
                 }
             }
-            List<Cell> updatedCellList = combineCells(cellList);
+            List<Cell> updatedCellList = combineCells(notEmptyCellList);
             if (!updatedCellList.isEmpty()) {
                 updateField.updateCells(cells, updatedCellList);
             }
-            cellList.clear();
+            notEmptyCellList.clear();
         }
     }
 

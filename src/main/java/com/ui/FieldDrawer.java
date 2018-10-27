@@ -7,7 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class FieldDraw {
+public class FieldDrawer {
     private static final int MAX_FIELD_SIZE = 500;
     private static final int RED = 50;
     private static final int GREEN = 250;
@@ -17,14 +17,14 @@ public class FieldDraw {
     private static final int OFFSET_Y = 80;
     private static final int MAX_FONT_SIZE = 50;
 
-    private final int numberCells;
+    private final int numberOfCells;
     private final Field field;
     private final int radius;
 
-    public FieldDraw(int numberCells, Field field) {
-        this.numberCells = numberCells;
+    public FieldDrawer(int numberOfCells, Field field) {
+        this.numberOfCells = numberOfCells;
         this.field = field;
-        radius = MAX_FIELD_SIZE / numberCells;
+        radius = MAX_FIELD_SIZE / numberOfCells;
     }
 
     public void drawField(Canvas canvas) {
@@ -60,7 +60,12 @@ public class FieldDraw {
                     gc.fillRect(x, y, radius, radius);
                     int fontSizeCalculation = MAX_FONT_SIZE - (cell.getCellValue()) % 25;
                     gc.setFont(Font.font(fontSizeCalculation));
-                    gc.strokeText(cell.getCellValue() + "", x + OFFSET_X, y + OFFSET_Y);
+                    String cellValue = String.valueOf(cell.getCellValue());
+                    int additionalOffsetX = 0;
+                    if(cellValue.length() > 1) {
+                        additionalOffsetX = 15 * (cellValue.length() - 1);
+                    }
+                    gc.strokeText(cellValue, x + OFFSET_X - additionalOffsetX, y + OFFSET_Y);
                 }
             }
         }
@@ -68,7 +73,7 @@ public class FieldDraw {
     }
 
     private double convertCoordinate(int digit) {
-        return (MAX_FIELD_SIZE / numberCells * digit);
+        return (MAX_FIELD_SIZE / numberOfCells * digit);
     }
 
 
