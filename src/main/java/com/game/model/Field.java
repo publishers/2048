@@ -6,7 +6,6 @@ import java.util.List;
 public class Field {
     private Cell[][] cells;
     private List<int[][]> fieldHistory;
-    private int[][] firstState;
 
     public Field(Cell[][] cells) {
         this.cells = cells;
@@ -42,24 +41,21 @@ public class Field {
             }
         }
         fieldHistory.add(newFieldState);
-        if(fieldHistory.size() == 1) {
-            firstState = fieldHistory.get(0);
-        }
     }
 
     public void undo() {
-        int[][] prevFieldState;
         if (fieldHistory.size() > 1) {
-            prevFieldState = fieldHistory.remove(fieldHistory.size() - 2);
-            for (int i = 0; i < cells.length; i++) {
-                for (int j = 0; j < cells.length; j++) {
-                    cells[i][j].setCellValue(prevFieldState[i][j]);
-                }
-            }
+            int[][] prevFieldState = fieldHistory.get(fieldHistory.size() - 2);
+            upgradeCellValues(prevFieldState);
+            fieldHistory.remove(fieldHistory.size() - 1);
         }
-        if(fieldHistory.size() == 1) {
-            fieldHistory.clear();
-            fieldHistory.add(firstState);
+    }
+
+    private void upgradeCellValues(int[][] fieldState) {
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells.length; j++) {
+                cells[i][j].setCellValue(fieldState[i][j]);
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ import com.game.command.Command;
 import com.game.command.impl.DownCommand;
 import com.game.command.impl.LeftCommand;
 import com.game.command.impl.RightCommand;
+import com.game.command.impl.UndoCommand;
 import com.game.command.impl.UpCommand;
 import com.game.model.Cell;
 import com.game.model.Field;
@@ -47,12 +48,14 @@ public class Game implements Initializable {
         Command downCommand = new DownCommand(actionField);
         Command leftCommand = new LeftCommand(actionField);
         Command rightCommand = new RightCommand(actionField);
+        Command undoCommand = new UndoCommand(actionField);
 
         Map<KeyCode, Command> actions = new HashMap<>();
         actions.put(KeyCode.UP, upCommand);
         actions.put(KeyCode.DOWN, downCommand);
         actions.put(KeyCode.LEFT, leftCommand);
         actions.put(KeyCode.RIGHT, rightCommand);
+        actions.put(KeyCode.BACK_SPACE, undoCommand);
 
         return actions;
     }
@@ -78,7 +81,9 @@ public class Game implements Initializable {
         Command command = actions.get(event.getCode());
         if(command != null) {
             command.execute();
-            addCells.execute();
+            if(event.getCode() != KeyCode.BACK_SPACE) {
+                addCells.execute();
+            }
             fieldDrawer.drawField(canvasField);
         }
     }
